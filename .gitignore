@@ -47,3 +47,7 @@ Thumbs.db
 *.tgz
 *.zip
 coverage/
+
+# Cloudflare
+.wrangler/
+.dev.vars

@@ -9,13 +9,22 @@
     "build": "vite-ssg build && node scripts/postbuild.mjs",
     "build:fast": "vite-ssg build && node scripts/postbuild.mjs",
     "preview": "vite preview --host --port 3000",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "typecheck:worker": "tsc -p worker/tsconfig.json",
+    "test:worker": "node worker/test/engine.test.ts",
+    "test:e2e": "bash worker/test/e2e.sh",
+    "dev:worker": "npm run build && wrangler dev",
+    "dev:standalone": "node worker/src/standalone.ts",
+    "deploy": "npm run build && wrangler deploy",
+    "db:schema": "wrangler d1 execute DB --local --file=worker/schema.sql",
+    "db:seed": "wrangler d1 execute DB --local --file=worker/seed.sql"
   },
   "dependencies": {
     "vue": "^3.5.44",
     "vue-router": "^5.4.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261119.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.6.5",
     "@vitejs/plugin-vue": "^6.0.10",
@@ -24,9 +33,13 @@
     "typescript": "~5.9.3",
     "vite": "^8.3.5",
     "vite-ssg": "^28.3.0",
-    "vue-tsc": "^3.3.13"
+    "vue-tsc": "^3.3.13",
+    "wrangler": "^4.0.0"
   },
   "engines": {
     "node": ">=20.19.0"
+  },
+  "allowScripts": {
+    "workerd@1.20261119.1": true
   }
 }

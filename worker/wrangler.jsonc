@@ -1,0 +1,40 @@
+/**
+ * Cloudflare adapter configuration.
+ *
+ * Routing model: assets-first. The prerendered dist/ bundle is uploaded
+ * with the worker; any URL that matches an asset is served by the CDN
+ * without invoking the worker. The worker only runs on asset misses:
+ * dynamic content pages (rendered from D1, cached in R2) and /__site/*.
+ *
+ * First-run checklist:
+ *   npx wrangler d1 create enode-content     # put the printed id below
+ *   npx wrangler r2 bucket create enode-page-cache
+ *   npm run db:schema && npm run db:seed    # local D1 (add --remote for prod)
+ *   npx wrangler secret put ADMIN_TOKEN     # enables POST /__site/bump
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "enode-site",
+  "main": "src/adapters/cloudflare/index.ts",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "../dist",
+    "binding": "ASSETS",
+    // No asset matched and the worker returned nothing? Serve a bare 404.
+    "not_found_handling": "none"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "enode-content",
+      // TODO: replace with the id from `npx wrangler d1 create enode-content`
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "CACHE",
+      "bucket_name": "enode-page-cache"
+    }
+  ]
+}

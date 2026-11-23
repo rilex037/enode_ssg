@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "generated/**/*.ts"
+  ],
+  // The standalone Node server mixes node:http globals with Workers types;
+  // it is verified by running it (`npm run dev:standalone`) instead.
+  "exclude": ["src/standalone.ts"]
+}
