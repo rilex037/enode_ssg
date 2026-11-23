@@ -1,0 +1,32 @@
+{
+  "name": "enode_ssg",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Reusable Vue 3 + Vite SSG (Static Site Generator) framework",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host --port 3000",
+    "build": "vite-ssg build && node scripts/postbuild.mjs",
+    "build:fast": "vite-ssg build && node scripts/postbuild.mjs",
+    "preview": "vite preview --host --port 3000",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "prettier": "^3.9.10",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.5",
+    "vite-ssg": "^28.3.0",
+    "vue-tsc": "^3.3.13"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}
